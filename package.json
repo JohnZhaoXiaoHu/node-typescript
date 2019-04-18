@@ -16,7 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "autocannon": "^3.2.1",
-    "cluster": "^0.7.7",
     "express": "^4.16.4"
   },
   "devDependencies": {
