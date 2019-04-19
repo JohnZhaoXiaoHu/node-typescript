@@ -3,17 +3,17 @@ import { ItemsActions } from '../actions/ItemsActions';
 
 export class ItemsRoutes {
     public router: Router;
-    private users: ItemsActions;
+    private items: ItemsActions;
 
     constructor() {
         this.router = Router();
-        this.users = new ItemsActions();
+        this.items = new ItemsActions();
 
         this.configRoutes();
     }
 
     private configRoutes(): void {
-        this.router.get('/', this.users.getAllItems);
-        this.router.get('/:id', this.users.getItemById);
+        this.router.get('/', this.items.getAllItems);
+        this.router.get('/:id', this.items.getItemById);
     }
 }
