@@ -1,25 +1,34 @@
 import cluster from 'cluster';
 import express from 'express';
 import os from 'os';
+import { Client } from 'pg';
+import { PORT } from './config';
+import Postgres from './db/Postgres';
 import { Worker } from './Worker';
 
 class Cluster {
-  private PORT: number;
   private pid: number;
   private app: express.Application;
+  private pgClient: Client;
 
   constructor() {
-    this.PORT = 3000;
     this.pid = process.pid;
     this.app = new Worker().app;
+    this.pgClient = new Postgres().client;
 
-    this.configCluster();
+    this.pgClient.connect((err) => {
+      if (err) {
+          return console.error('failed connection to Postgres', err.stack);
+      }
+      console.log('successful connected to Postgres');
+      this.startCluster();
+    });
   }
 
-  private configCluster(): void {
+  private startCluster(): void {
     if (cluster.isMaster) {
       const cpucount: number = os.cpus().length;
-      console.log( `server started at http://localhost:${ this.PORT }`);
+      console.log( `server started at http://localhost:${ PORT }`);
       console.log(`CPUs: ${cpucount}`);
       console.log(`Master started, Pid ${this.pid} \n`);
 
@@ -36,7 +45,7 @@ class Cluster {
     }
 
     if (cluster.isWorker) {
-      const server = this.app.listen( this.PORT, () => {
+      const server = this.app.listen( PORT, () => {
         console.log(`Worker started, Pid ${this.pid}`);
       });
 
