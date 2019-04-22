@@ -2,13 +2,13 @@
   "name": "node-typescript",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/cluster.js",
+  "main": "dist/Server.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
-    "pm2": "pm2 start dist/cluster.js --log-date-format 'DD-MM HH:mm:ss.SSS'",
+    "pm2": "pm2 start dist/server.js -i -1 --log-date-format 'DD-MM HH:mm:ss.SSS'",
     "test": "autocannon -c 200 -d 10 http://localhost:3000"
   },
   "keywords": [],
