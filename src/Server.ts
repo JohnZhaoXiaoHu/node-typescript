@@ -2,16 +2,16 @@ import express from 'express';
 import { Client } from 'pg';
 import { PORT } from './config';
 import Postgres from './db/Postgres';
-import ItemsRoutes from './routes/ItemsRoutes';
+import Routes from './routes/Routes';
 
 class Server {
   public app: express.Application;
-  private itemsRouter: express.Router;
+  private router: express.Router;
   private pgClient: Client;
 
   constructor() {
     this.app = express();
-    this.itemsRouter = new ItemsRoutes().router;
+    this.router = new Routes().router;
     this.pgClient = new Postgres().client;
 
     this.configRoutes();
@@ -33,8 +33,7 @@ class Server {
       res.send( 'Hello typescript!' );
     });
 
-    // items
-    this.app.use( '/items', this.itemsRouter);
+    this.app.use( '/', this.router);
   }
 }
 export default new Server();
