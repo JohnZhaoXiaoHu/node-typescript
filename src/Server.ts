@@ -2,7 +2,7 @@ import express from 'express';
 import { Client } from 'pg';
 import { PORT } from './config';
 import Postgres from './db/Postgres';
-import { ItemsRoutes } from './routes/ItemsRoutes';
+import ItemsRoutes from './routes/ItemsRoutes';
 
 class Server {
   public app: express.Application;

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { ItemsActions } from '../actions/ItemsActions';
+import ItemsActions from '../actions/ItemsActions';
 
-export class ItemsRoutes {
+export default class ItemsRoutes {
     public router: Router;
     private items: ItemsActions;
 

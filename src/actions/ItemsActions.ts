@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Client } from 'pg';
 import Postgres from '../db/Postgres';
 
-export class ItemsActions {
+export default class ItemsActions {
     private pgClient: Client;
 
     constructor() {
