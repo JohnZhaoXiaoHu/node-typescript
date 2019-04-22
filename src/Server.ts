@@ -11,8 +11,8 @@ class Server {
 
   constructor() {
     this.app = express();
-    this.router = new Routes().router;
-    this.pgClient = new Postgres().client;
+    this.router = Routes.router;
+    this.pgClient = Postgres.client;
 
     this.configRoutes();
 

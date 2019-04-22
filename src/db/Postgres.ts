@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 import { DB_URL } from '../config';
 
-export default class Postgres {
+class Postgres {
     public client: Client;
 
     constructor() {
@@ -11,3 +11,4 @@ export default class Postgres {
         });
     }
 }
+export default new Postgres();

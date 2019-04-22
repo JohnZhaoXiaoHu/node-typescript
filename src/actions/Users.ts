@@ -6,7 +6,7 @@ export default class Users {
   private pgClient: Client;
 
   constructor() {
-    this.pgClient = new Postgres().client;
+    this.pgClient = Postgres.client;
   }
 
   public getAllUsers = (req: Request, res: Response) => {

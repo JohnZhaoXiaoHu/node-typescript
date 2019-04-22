@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import Users from '../actions/Users';
 
-export default class Routes {
+class Routes {
     public router: Router;
     private users: Users;
 
@@ -18,3 +18,4 @@ export default class Routes {
         this.router.get('/users/:id', this.users.getUserById);
     }
 }
+export default new Routes();
