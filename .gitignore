@@ -30,3 +30,5 @@ node_modules
 # Dist
 dist
 \.DS_Store
+
+\.env
