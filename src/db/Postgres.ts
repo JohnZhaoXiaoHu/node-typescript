@@ -1,14 +1,8 @@
 import { Client } from 'pg';
 import { DB_URL } from '../config';
 
-class Postgres {
-    public client: Client;
+const connectionString = DB_URL;
 
-    constructor() {
-        const connectionString = DB_URL;
-        this.client = new Client({
-            connectionString
-        });
-    }
-}
-export default new Postgres();
+export const pgClient = new Client({
+    connectionString
+});
