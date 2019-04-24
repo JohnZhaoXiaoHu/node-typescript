@@ -9,7 +9,7 @@
     "prestart": "npm run build",
     "start": "NODE_ENV=development node .",
     "pm2": "NODE_ENV=production pm2 start dist/server.js -i -1 --log-date-format 'DD-MM HH:mm:ss.SSS'",
-    "test": "autocannon -c 200 -d 10 http://localhost:3000"
+    "autocannon": "autocannon -c 200 -d 10 http://localhost:3000"
   },
   "keywords": [],
   "author": "",
