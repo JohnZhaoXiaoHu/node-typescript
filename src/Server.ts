@@ -7,8 +7,6 @@ import router from './routes';
 
 const app = express();
 
-console.log(process.env.NODE_ENV);
-
 // morgan setup
 const logsType = process.env.NODE_ENV === 'production' ? 'short' : 'dev';
 app.use(morgan(logsType, {}));
