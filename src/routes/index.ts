@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import users from '../actions/users';
 
-const router = Router();
+const router = Router({strict: true});
 
 // Users
 router.get('/users', users.getAllUsers);

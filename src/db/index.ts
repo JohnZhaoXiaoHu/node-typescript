@@ -7,6 +7,6 @@ export const sequelize = new Sequelize(DB_URL, {
     // This was true by default, but now is false by default
     timestamps: false
   },
-  // logging: false
+  logging: false
 });
-// sequelize.sync();
+sequelize.sync();

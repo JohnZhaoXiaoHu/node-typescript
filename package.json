@@ -7,8 +7,8 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node .",
-    "pm2": "pm2 start dist/server.js -i -1 --log-date-format 'DD-MM HH:mm:ss.SSS'",
+    "start": "NODE_ENV=development node .",
+    "pm2": "NODE_ENV=production pm2 start dist/server.js -i -1 --log-date-format 'DD-MM HH:mm:ss.SSS'",
     "test": "autocannon -c 200 -d 10 http://localhost:3000"
   },
   "keywords": [],
@@ -21,6 +21,7 @@
     "autocannon": "^3.2.1",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "morgan": "^1.9.1",
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.7.4"
