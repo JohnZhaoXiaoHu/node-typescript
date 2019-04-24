@@ -1,7 +1,8 @@
 import express from 'express';
 import { Client } from 'pg';
 import { PORT } from './config';
-import { pgClient } from './db/Postgres';
+// import { pgClient } from './db/Postgres';
+import { sequelize } from './db';
 import router from './routes';
 
 const app = express();
@@ -12,13 +13,15 @@ app.get( '/', ( req, res ) => {
 
 app.use( '/', router);
 
-pgClient.connect((err) => {
-  if (err) {
-      return console.error('failed connection to Postgres', err.stack);
-  }
-  console.log('successful connected to Postgres');
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection to Postgres has been established successfully.');
 
-  app.listen( PORT, () => {
-    console.log(`Server started at http://localhost:${ PORT }`);
+    app.listen( PORT, () => {
+      console.log(`Server started at http://localhost:${ PORT }`);
+    });
+  })
+  .catch((err: any) => {
+    console.error('Unable to connect to the database:', err);
   });
-});

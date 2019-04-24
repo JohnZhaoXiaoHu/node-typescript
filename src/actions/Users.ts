@@ -1,22 +1,34 @@
 import { Request, Response } from 'express';
 import { Client } from 'pg';
-import { pgClient } from '../db/Postgres';
+// import { pgClient } from '../db/Postgres';
+import User from '../db/models/User';
 
 export default {
   getAllUsers: (req: Request, res: Response) => {
-    const query = 'SELECT * FROM users';
-    pgClient.query(query, (pgerr, pgres) => {
-      if (pgerr) {
-        return console.log(pgerr);
-      }
-      res.send(pgres.rows);
+    User.findAll({ limit: 10 }).then((users: [User]) => {
+      // console.log(JSON.stringify(users, null, 10));
+      res.send(users);
     });
   },
   getUserById: (req: Request, res: Response) => {
-    const query = 'SELECT * FROM users WHERE user_id = $1';
     const id = req.params.id;
-    pgClient.query(query, [id], (pgerr, pgres) => {
-      res.send(pgres.rows);
+    User.findAll({
+      where: {
+        id
+      }
+    }).then((users: [User]) => {
+      res.send(users);
+    });
+  },
+  getUserNameById: (req: Request, res: Response) => {
+    const id = req.params.id;
+    User.findAll({
+      attributes: ['user_firstname'],
+      where: {
+        id
+      }
+    }).then((users: [User]) => {
+      res.send(users);
     });
   }
 };
