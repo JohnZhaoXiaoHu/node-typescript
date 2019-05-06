@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 
 import { sequelize } from '..';
 
-export default class User extends Model {}
+class User extends Model {}
 User.init({
   // attributes
   user_firstname: {
@@ -18,3 +18,4 @@ User.init({
   sequelize,
   // options
 });
+export default User;
