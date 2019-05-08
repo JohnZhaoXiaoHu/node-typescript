@@ -9,6 +9,7 @@ POST - /redis - body: { key: number, value: 44 } - set value 44 for key number
 GET - /redis?key=number - select value for key 'number'
 
 POST - /token - body: { login: , password: } - get token
-GET - /checkToken - get decoded data from token
+
+GET - /checkToken - get decoded data (user login) from token
 
 /socketio.html - socket io html file
