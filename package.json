@@ -18,6 +18,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/bluebird": "^3.5.26",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/jwt-decode": "^2.2.1",
     "@types/koa-morgan": "^1.0.4",
     "@types/koa-router": "^7.0.40",
     "@types/koa-static": "^4.0.1",
@@ -28,7 +30,9 @@
     "@types/supertest": "^2.0.7",
     "@types/validator": "^10.11.0",
     "autocannon": "^3.2.1",
+    "bcrypt": "^3.0.6",
     "dotenv": "^7.0.0",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
     "koa-morgan": "^1.0.1",
