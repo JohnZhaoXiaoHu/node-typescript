@@ -1,10 +1,16 @@
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { RouterContext } from 'koa-router';
+import uuid from 'uuid';
 import User from '../db/models/User';
 
 export default {
   getUsers: (ctx: RouterContext, next: () => Promise<any>) => {
     const limit = ctx.query.limit;
-    return User.findAll({ limit: limit || 10 }).then((users: [User]) => {
+    const offset = ctx.query.offset;
+    return User.findAll({
+      limit: limit || 10, offset: offset || 0
+    }).then((users: [User]) => {
       // console.log(JSON.stringify(users, null, 10));
       ctx.body = users;
     });
@@ -26,5 +32,32 @@ export default {
     }).then((user: User) => {
       ctx.body = user;
     });
-  }
+  },
+  createUser: (ctx: RouterContext, next: () => Promise<any>) => {
+    const user = {
+      login: ctx.request.body.login,
+      pwd: ctx.request.body.password
+    };
+    try {
+      const token = jwt.sign({ user }, 'privateKey');
+      const saltRounds = 10;
+      const password = user.pwd;
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(password, salt);
+
+      return User.create({
+        id: uuid(),
+        mail: user.login,
+        password: hash,
+      }).then((inserted) => {
+        console.log(hash);
+        console.log(inserted);
+        ctx.body = token;
+      }).catch((err) => {
+        ctx.body = `error adding user in db: ${err}`;
+      });
+    } catch {
+      ctx.body = 'error getting token';
+    }
+  },
 };

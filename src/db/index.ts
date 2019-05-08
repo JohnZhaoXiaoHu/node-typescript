@@ -7,4 +7,3 @@ export const sequelize = new Sequelize(DB_URL, {
   },
   logging: false
 });
-sequelize.sync();

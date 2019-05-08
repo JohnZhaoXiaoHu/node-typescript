@@ -16,6 +16,7 @@ router.get('/checkToken', auth.checkToken);
 
 // Users
 router.get('/users', users.getUsers);
+router.post('/users', bodyParser(), users.createUser);
 router.get('/users/:id', users.getUserById);
 router.get('/users/:id/name', users.getUserNameById);
 

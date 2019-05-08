@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { RouterContext } from 'koa-router';
-import uuid from 'uuid/v1';
 import User from '../db/models/User';
 
 export default {
@@ -12,21 +11,20 @@ export default {
     };
     try {
       const token = jwt.sign({ user }, 'privateKey');
-      const saltRounds = 10;
       const password = user.pwd;
-      const salt = bcrypt.genSaltSync(saltRounds);
-      const hash = bcrypt.hashSync(password, salt);
 
-      return User.create({
-        id: uuid(),
-        mail: user.login,
-        password: hash,
-      }).then((inserted) => {
-        console.log(hash);
-        console.log(inserted);
-        ctx.body = token;
+      return User.findOne({
+        where: {
+          mail: user.login,
+        }
+      }).then((usr: User) => {
+        const hashedPwd = usr.get('password') as string;
+        return bcrypt.compare(password, hashedPwd).then((res) => {
+          console.log(res);
+          ctx.body = token;
+        });
       }).catch((err) => {
-        ctx.body = `error adding user in db: ${err}`;
+        ctx.body = `error getting user`;
       });
     } catch {
       ctx.body = 'error getting token';
