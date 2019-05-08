@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { RouterContext } from 'koa-router';
 import uuid from 'uuid';
+import { TOKEN_KEY } from '../config';
 import User from '../db/models/User';
 
 export default {
@@ -39,7 +40,7 @@ export default {
       pwd: ctx.request.body.password
     };
     try {
-      const token = jwt.sign({ user }, 'privateKey');
+      const token = jwt.sign({ user }, TOKEN_KEY);
       const saltRounds = 10;
       const password = user.pwd;
       const salt = bcrypt.genSaltSync(saltRounds);

@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { RouterContext } from 'koa-router';
+import { TOKEN_KEY } from '../config';
 import User from '../db/models/User';
 
 export default {
@@ -10,7 +11,7 @@ export default {
       pwd: ctx.request.body.password
     };
     try {
-      const token = jwt.sign({ user }, 'privateKey');
+      const token = jwt.sign({ user }, TOKEN_KEY);
       const password = user.pwd;
 
       return User.findOne({
@@ -40,7 +41,7 @@ export default {
       token = bearerToken;
     }
     try {
-      const decoded = jwt.verify(token, 'privateKey') as any;
+      const decoded = jwt.verify(token, TOKEN_KEY) as any;
       ctx.body = decoded.user.login;
     } catch {
       ctx.body = 'decoding error';
