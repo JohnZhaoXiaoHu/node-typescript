@@ -1,4 +1,4 @@
-// import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { RouterContext } from 'koa-router';
 
@@ -8,14 +8,17 @@ export default {
       login: ctx.request.body.login,
       pwd: ctx.request.body.password
     };
-    let token;
     try {
-      token = jwt.sign({ user }, 'privateKey');
+      const token = jwt.sign({ user }, 'privateKey');
+      const saltRounds = 10;
+      const myPlaintextPassword = user.pwd;
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(myPlaintextPassword, salt);
+      console.log(hash);
+      ctx.body = token;
     } catch {
-      console.log('error getting token');
+      ctx.body = 'error getting token';
     }
-    console.log(token);
-    ctx.body = token;
   },
   // tslint:disable-next-line:object-literal-sort-keys
   checkToken: (ctx: RouterContext, next: () => Promise<any>) => {
@@ -26,13 +29,11 @@ export default {
       const bearerToken = bearer[1];
       token = bearerToken;
     }
-    let decoded;
     try {
-      decoded = jwt.verify(token, 'privateKey');
+      const decoded = jwt.verify(token, 'privateKey') as any;
+      ctx.body = decoded.user.login;
     } catch {
-      console.log('decoding error');
+      ctx.body = 'decoding error';
     }
-    console.log(decoded);
-    ctx.body = decoded;
   },
 };
