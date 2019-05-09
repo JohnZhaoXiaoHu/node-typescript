@@ -25,6 +25,7 @@ export default {
       ctx.body = `user not found`;
       return;
     }
+
     const hashedPwd = dbUser.get('password') as string;
 
     let match: boolean;
@@ -40,6 +41,7 @@ export default {
       ctx.body = 'wrong password';
       return;
     }
+
     ctx.body = token;
   }
 };

@@ -30,6 +30,7 @@ export default {
       return;
     }
     const newUser = createdUser.toJSON();
+
     ctx.status = 201;
     ctx.body = {
       token,
@@ -39,7 +40,6 @@ export default {
 
   getUserData: async (ctx: RouterContext, next: () => Promise<any>) => {
     const token = ctx.token;
-
     const decoded = jwt.verify(token, TOKEN_KEY) as any;
     const mail = decoded.user.mail;
 
@@ -53,6 +53,7 @@ export default {
       ctx.body = `user not found`;
       return;
     }
+
     ctx.body = dbUser;
   }
 };
