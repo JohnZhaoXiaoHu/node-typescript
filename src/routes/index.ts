@@ -8,15 +8,16 @@ const router = new Router({ strict: true });
 
 const checkToken = async (ctx: Router.RouterContext, next: () => Promise<any>) => {
   const header = ctx.headers.authorization;
-  if (header !== undefined) {
-      const bearer = header.split(' ');
-      const token = bearer[1];
-
-      ctx.token = token;
-      await next();
-  } else {
-      ctx.sendStatus(403);
+  if (!header) {
+    ctx.status = 401;
+    ctx.body = `token not transferred`;
+    return;
   }
+  const bearer = header.split(' ');
+  const token = bearer[1];
+
+  ctx.token = token;
+  await next();
 };
 
 // Routes
