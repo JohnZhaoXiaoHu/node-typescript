@@ -15,9 +15,14 @@ const checkToken = async (ctx: Router.RouterContext, next: () => Promise<any>) =
   }
   const bearer = header.split(' ');
   const token = bearer[1];
-
   ctx.token = token;
-  await next();
+
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err.message;
+  }
 };
 
 // Routes

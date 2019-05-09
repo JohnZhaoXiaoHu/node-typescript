@@ -33,7 +33,7 @@ export default {
       match = await bcrypt.compare(password, hashedPwd);
     } catch (err) {
       ctx.status = 500;
-      console.log(err);
+      ctx.body = err.message;
       return;
     }
     if (!match) {

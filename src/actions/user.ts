@@ -26,9 +26,10 @@ export default {
       });
     } catch (err) {
       ctx.status = 400;
-      ctx.body = `error adding user in db`;
+      ctx.body = err.message;
       return;
     }
+
     const newUser = createdUser.toJSON();
 
     ctx.status = 201;
@@ -50,7 +51,7 @@ export default {
       });
     } catch (err) {
       ctx.status = 404;
-      ctx.body = `user not found`;
+      ctx.body = err.message;
       return;
     }
 
