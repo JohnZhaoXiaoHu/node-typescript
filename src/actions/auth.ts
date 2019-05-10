@@ -32,12 +32,12 @@ export default {
     try {
       match = await bcrypt.compare(password, hashedPwd);
     } catch (err) {
-      ctx.status = 500;
+      ctx.status = 400;
       ctx.body = err.message;
       return;
     }
     if (!match) {
-      ctx.status = 401;
+      ctx.status = 403;
       ctx.body = 'wrong password';
       return;
     }
