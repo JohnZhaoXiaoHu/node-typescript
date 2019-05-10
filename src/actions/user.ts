@@ -9,11 +9,33 @@ export default {
   createUser: async (ctx: RouterContext, next: () => Promise<any>) => {
     const user = {
       mail: ctx.request.body.mail,
-      pwd: ctx.request.body.password
+      password: ctx.request.body.password
     };
+    let bodyErr = null;
+    Object.values(user).map((value, i) => {
+      switch (value) {
+        case undefined:
+          const uKey = Object.keys(user)[i];
+          ctx.status = 400;
+          bodyErr = `${uKey} is not specified in the body`;
+          break;
+        case '':
+          const nKey = Object.keys(user)[i];
+          ctx.status = 400;
+          bodyErr = `${nKey} cannot be empty`;
+          console.log(value);
+          break;
+        default:
+          break;
+      }
+    });
+    if (bodyErr) {
+      return ctx.body = bodyErr;
+    }
+
     const token = jwt.sign({ user }, TOKEN_KEY);
     const saltRounds = BCRYPT_SALT as number;
-    const password = user.pwd;
+    const password = user.password;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
 
