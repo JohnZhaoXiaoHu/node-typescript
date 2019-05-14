@@ -4,15 +4,15 @@ import { sequelize } from '..';
 
 class User extends Model {}
 User.init({
-  // attributes
-  firstname: {
-    // allowNull defaults to true
-    type: new DataTypes.STRING(),
-  },
   id: {
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.UUID,
+  },
+  // tslint:disable-next-line:object-literal-sort-keys
+  firstname: {
+    // allowNull defaults to true
+    type: new DataTypes.STRING(),
   },
   lastname: {
     type: new DataTypes.STRING()

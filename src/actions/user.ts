@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { RouterContext } from 'koa-router';
 import uuid from 'uuid';
-import { BCRYPT_SALT, TOKEN_KEY } from '../config';
+import { BCRYPT_SALT, JWT_SECRET_KEY } from '../config';
 import User from '../db/models/User';
 
 export default {
@@ -33,7 +33,7 @@ export default {
       return ctx.body = bodyErr;
     }
 
-    const token = jwt.sign({ user }, TOKEN_KEY);
+    const token = jwt.sign({ user }, JWT_SECRET_KEY);
     const saltRounds = BCRYPT_SALT as number;
     const password = user.password;
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -63,7 +63,7 @@ export default {
 
   getUserData: async (ctx: RouterContext, next: () => Promise<any>) => {
     const token = ctx.token;
-    const decoded = jwt.verify(token, TOKEN_KEY) as any;
+    const decoded = jwt.verify(token, JWT_SECRET_KEY) as any;
     const mail = decoded.user.mail;
 
     let dbUser: User;

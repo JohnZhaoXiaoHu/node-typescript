@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { RouterContext } from 'koa-router';
-import { TOKEN_KEY } from '../config';
+import { JWT_SECRET_KEY } from '../config';
 import User from '../db/models/User';
 
 export default {
@@ -32,7 +32,7 @@ export default {
       return ctx.body = bodyErr;
     }
 
-    const token = jwt.sign({ user }, TOKEN_KEY);
+    const token = jwt.sign({ user }, JWT_SECRET_KEY);
     const password = user.password;
 
     let dbUser: User;
